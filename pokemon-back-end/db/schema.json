@@ -1,0 +1,39 @@
+{
+
+  "migration_id": 2016072819431421,
+
+  "models": {
+
+    "GeoJson": {
+
+      "table": "geo_jsons",
+
+      "columns": [
+        {"name": "id", "type": "serial", "properties": {"nullable":false,"primary_key":true,"auto_increment":true}},
+        {"name": "type", "type": "string", "properties": {}},
+        {"name": "geometry", "type": "json", "properties": {}},
+        {"name": "properties", "type": "json", "properties": {}},
+        {"name": "created_at", "type": "datetime", "properties": {}},
+        {"name": "updated_at", "type": "datetime", "properties": {}}
+      ]
+
+    },
+
+    "PokemonJson": {
+
+      "table": "pokemon_jsons",
+
+      "columns": [
+        {"name": "id", "type": "serial", "properties": {"nullable":false,"primary_key":true,"auto_increment":true}},
+        {"name": "type", "type": "string", "properties": {}},
+        {"name": "geometry", "type": "json", "properties": {}},
+        {"name": "properties", "type": "json", "properties": {}},
+        {"name": "created_at", "type": "datetime", "properties": {}},
+        {"name": "updated_at", "type": "datetime", "properties": {}}
+      ]
+
+    }
+
+  }
+
+}

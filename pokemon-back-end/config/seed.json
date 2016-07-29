@@ -1,0 +1,71 @@
+{
+  "development": {
+         "PokemonJson" : [
+        {
+          "type": "Feature",
+          "geometry": {
+              "type": "Point",
+              "coordinates": [-122.413682, 37.775408]
+          },
+          "properties": {
+              "icon": {
+                  "iconUrl": "http://cdn.bulbagarden.net/upload/8/85/385Jirachi.png",
+                  "iconSize": [25, 25], 
+                  "iconAnchor": [30, 30], 
+                  "className": "dot"
+              }
+          }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+              "type": "Point",
+              "coordinates": [-122.397550, 37.785188]
+            },
+            "properties": {
+              "icon": {
+                  "iconUrl": "http://vignette4.wikia.nocookie.net/es.pokemon/images/4/43/Charmander_MM_Artwork.png/revision/latest?cb=20110114212621",
+                  "iconSize": [30, 30], 
+                  "iconAnchor": [25, 25], 
+                  "className": "dot"
+              }
+            }
+          }, 
+          {
+            "type": "Feature",
+            "geometry": {
+              "type": "Point",
+              "coordinates": [-122.400482, 37.785176]
+            },
+            "properties": {
+              "icon": {
+                  "iconUrl": "http://vignette3.wikia.nocookie.net/fantendo/images/0/07/20110526012846%21Ash_Pikachu.png/revision/latest?cb=20131122162138",
+                  "iconSize": [30, 30], 
+                  "iconAnchor": [25, 25], 
+                  "className": "dot"
+              }
+            }
+          }, 
+          {
+            "type": "Feature",
+            "geometry": {
+              "type": "Point",
+              "coordinates": [-122.397875, 37.784966]
+            },
+            "properties": {
+              "icon": {
+                  "iconUrl": "http://vignette4.wikia.nocookie.net/deathbattle/images/1/1e/Squirtle_.png/revision/latest?cb=20151110214320",
+                  "iconSize": [30, 30], 
+                  "iconAnchor": [25, 25], 
+                  "className": "dot"
+              }
+            }
+          }
+        ]
+    },
+  "test": {},
+
+
+  "production": {}
+
+}
