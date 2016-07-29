@@ -17,7 +17,7 @@ $ cd pokemon-back-end
 $ nodal s
 ```
 ```sh
-$ d pokemon-front-end
+$ cd pokemon-front-end
 ```
 ```sh
 $ node app.js
