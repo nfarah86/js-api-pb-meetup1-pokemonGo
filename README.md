@@ -1,6 +1,6 @@
 # Building A Pokemon-Go-Like App
 
-This is the first project for the JS+API Meetup!  
+This is the first project for the [JS+API Meetup](https://www.meetup.com/meetup-group-PfwmIfKG/)!  
 
 ##Getting-Started
 1) Make sure your npm and node softwares are updated and current.  
