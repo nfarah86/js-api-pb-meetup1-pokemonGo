@@ -7,7 +7,7 @@ This is the first project for the [JS+API Meetup](https://www.meetup.com/meetup-
 
 2) Have **Postgres App** installed (google postgres app, and download the app).
 
-3) Download the [CLI for Nodal](https://www.polybit.com/docs/tutorials/getting-started).  Go through the first 3 steps (do not deploy)
+3) Download the [CLI for Nodal](https://www.polybit.com/docs/tutorials/getting-started).  Go through the first 5 steps (do not deploy) of **Creating Your First API On Your Computer**
 
 ##Running the Server
 ```sh
