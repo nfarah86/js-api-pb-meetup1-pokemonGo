@@ -1,0 +1,24 @@
+extends layout
+
+block content
+  .container
+    form#userForm
+      .form-group.row
+        label.col-sm-2.col-form-label(for='email') Email
+        .col-sm-10
+          input#inputEmail3.form-control(type='email', placeholder='Email', name='email')
+      .form-group.row
+        label.col-sm-2.col-form-label(for='password') Password
+        .col-sm-10
+          input#inputPassword3.form-control(type='password', placeholder='Password', name='password')
+      .form-group.row
+        label.col-sm-2.col-form-label(for='username') Username
+        .col-sm-10
+          input#inputUsername3.form-control(type='username', placeholder='Username', name='username')
+      .form-group.row
+        .offset-sm-2.col-sm-10
+          button.btn.btn-primary(type='submit') Sign in
+
+      script(src='https://code.jquery.com/jquery-1.9.1.min.js')
+      script(type='text/javascript', src='/static/process.js')
+

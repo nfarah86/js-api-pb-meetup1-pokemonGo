@@ -26,10 +26,13 @@ router.renderware.use(GzipRenderware);
 /* Routes */
 const IndexController = Nodal.require('app/controllers/index_controller.js');
 
-
-const PokemonJsonsController = Nodal.require('app/controllers/pokemon_jsons_controller.js')
+const UsersController = Nodal.require('app/controllers/users_controller.js');
+const PokemonJsonsController = Nodal.require('app/controllers/pokemon_jsons_controller.js');
+const AccessTokensController = Nodal.require('app/controllers/access_tokens_controller.js');
 
 router.route('/pokemon_jsons/{id}').use(PokemonJsonsController);
+router.route('/users/{id}').use(UsersController);
+router.route('/access_tokens/{id}').use(AccessTokensController);
 
 /* generator: end routes */
 

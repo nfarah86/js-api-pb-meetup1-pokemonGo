@@ -1,8 +1,25 @@
 {
 
-  "migration_id": 2016072819431421,
+  "migration_id": 2016080903020798,
 
   "models": {
+
+    "AccessToken": {
+
+      "table": "access_tokens",
+
+      "columns": [
+        {"name": "id", "type": "serial", "properties": {"nullable":false,"primary_key":true,"auto_increment":true}},
+        {"name": "user_id", "type": "int", "properties": {}},
+        {"name": "access_token", "type": "string", "properties": {}},
+        {"name": "token_type", "type": "string", "properties": {}},
+        {"name": "expires_at", "type": "datetime", "properties": {}},
+        {"name": "ip_address", "type": "string", "properties": {}},
+        {"name": "created_at", "type": "datetime", "properties": {}},
+        {"name": "updated_at", "type": "datetime", "properties": {}}
+      ]
+
+    },
 
     "GeoJson": {
 
@@ -28,6 +45,21 @@
         {"name": "type", "type": "string", "properties": {}},
         {"name": "geometry", "type": "json", "properties": {}},
         {"name": "properties", "type": "json", "properties": {}},
+        {"name": "created_at", "type": "datetime", "properties": {}},
+        {"name": "updated_at", "type": "datetime", "properties": {}}
+      ]
+
+    },
+
+    "User": {
+
+      "table": "users",
+
+      "columns": [
+        {"name": "id", "type": "serial", "properties": {"nullable":false,"primary_key":true,"auto_increment":true}},
+        {"name": "email", "type": "string", "properties": {"unique":true}},
+        {"name": "password", "type": "string", "properties": {}},
+        {"name": "username", "type": "string", "properties": {}},
         {"name": "created_at", "type": "datetime", "properties": {}},
         {"name": "updated_at", "type": "datetime", "properties": {}}
       ]

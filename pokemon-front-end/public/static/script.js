@@ -32,6 +32,7 @@ function geoFindMe(){
 
         var buttonPokemon = document.getElementById("pokemonButton");
         buttonPokemon.innerHTML= "Catch Em!"
+        output.innerHTML = "<p></p>";
 
        $.get("http://localhost:3000/pokemon_jsons", function(data, status){
         for (var i = 0; i < data.data.length; i++) {

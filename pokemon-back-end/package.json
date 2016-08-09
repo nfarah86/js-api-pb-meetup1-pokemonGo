@@ -8,6 +8,7 @@
     "node": "6.0.0"
   },
   "dependencies": {
+    "bcryptjs": "^2.3.0",
     "nodal": "0.12.2"
   },
   "devDependencies": {
