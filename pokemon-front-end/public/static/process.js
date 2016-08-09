@@ -36,19 +36,19 @@ $( document ).ready(function() {
                 url: 'http://localhost:3000/access_tokens',
                 type: 'post',
                 contentType: 'application/x-www-form-urlencoded',
-                data:  {"user_id":id, "access_token":"bearer", "token_type":"user"},
-                headers: {
-                  'Access-Control-Allow-Origin':'*'
-                },
+                data:  {"user_id":id, "access_token":"trial122", "token_type":"Bearer"},
+
                 success: function( data, textStatus, jQxhr ){
-                    console.log(data)
+                    var accessToken = data.data[0].access_token;
+                    window.localStorage.setItem('access_token', accessToken);
+                    access_token = window.localStorage.getItem('access_token');
+                    console.log("access token is: ", access_token)
                 },
                 error: function( jqXhr, textStatus, errorThrown ){
                   console.error(jqXhr, textStatus, errorThrown)
                     window.location = 'error';
                 }
             });
-
 
     }
 

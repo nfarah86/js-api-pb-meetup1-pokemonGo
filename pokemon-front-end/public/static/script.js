@@ -33,16 +33,38 @@ function geoFindMe(){
         var buttonPokemon = document.getElementById("pokemonButton");
         buttonPokemon.innerHTML= "Catch Em!"
         output.innerHTML = "<p></p>";
+        access_token = window.localStorage.getItem('access_token');
 
-       $.get("http://localhost:3000/pokemon_jsons", function(data, status){
-        for (var i = 0; i < data.data.length; i++) {
-              if (data.data[i].created_at) {
-                  delete data.data[i].created_at;
-              } 
-              if (data.data[i].updated_at) {
-                  delete data.data[i].updated_at;
-              }
-        }
+
+
+          $.ajax({
+                url: 'http://localhost:3000/pokemon_jsons',
+                type: 'get',
+                headers: {
+                      'Authorization':'Bearer ' + access_token,
+                  },
+                contentType: 'application/x-www-form-urlencoded',
+                success: function( data, textStatus, jQxhr ){
+                  for (var i = 0; i < data.data.length; i++) {
+                    if (data.data[i].created_at) {
+                        delete data.data[i].created_at;
+                    } 
+                    if (data.data[i].updated_at) {
+                        delete data.data[i].updated_at;
+                    }
+
+                       setData(data)
+                  }
+                },
+                 error: function( jqXhr, textStatus, errorThrown ){
+                  console.log("here is the access token ", access_token)
+
+                  console.error(jqXhr, textStatus, errorThrown)
+                    
+                }
+           });
+
+      function setData(data) {
        var geoJson = data.data;
 
        var myLayer = L.mapbox.featureLayer().addTo(map);
@@ -84,6 +106,16 @@ function geoFindMe(){
             myLayer.setGeoJSON(geoJson);
       }
     });
-  });
+  
+
+
+
+
+};
+
+
+
+
+
 }
 }
