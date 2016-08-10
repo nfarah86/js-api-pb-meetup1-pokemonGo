@@ -1,7 +1,4 @@
 $( document ).ready(function() {
-
-    alert("working")
-
     var form = document.querySelector("form");
 
     $( "#loginForm" ).on( "submit", function( event ) {
