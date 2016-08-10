@@ -1,28 +1,35 @@
 $( document ).ready(function() {
 
+    alert("working")
+
     var form = document.querySelector("form");
 
-    $( "#userForm" ).on( "submit", function( event ) {
+    $( "#loginForm" ).on( "submit", function( event ) {
         event.preventDefault();
 
-        var email = form.elements[0].value
+        console.log(form)
+
+        var username = form.elements[0].value
         var password = form.elements[1].value
-        var username = form.elements[2].value
+
+        console.log(username, password)
         
-    if (email != "" && password != "" && username != "") {
+    if (password != "" && username != "") {
             $.ajax({
                 url: 'http://localhost:3000/users',
-                type: 'post',
-                contentType: 'application/x-www-form-urlencoded',
+                type: 'get',
                 data:  $(this).serialize(),
                 success: function( data, textStatus, jQxhr ){
-                    var userID = JSON.stringify(data.data[0].id)
-                    setAccessToken(userID)
-                    window.location = 'map';
+                    console.log("sucess: ", data)
+                    var userID = JSON.stringify(data.data[0])
+                    //setAccessToken(userID)
+                    console.log("sucess")
+                    window.location = 'map'
                 },
                 error: function( jqXhr, textStatus, errorThrown ){
-                  console.error(jqXhr, textStatus, errorThrown)
-                    window.location = 'login';
+                   console.error(jqXhr, textStatus, errorThrown)
+                    
+                    window.location = 'error';
                 }
             });
     } else {
@@ -39,6 +46,8 @@ $( document ).ready(function() {
                 data:  {"user_id":id, "access_token":"trial133", "token_type":"Bearer"},
 
                 success: function( data, textStatus, jQxhr ){
+                    
+
                     var accessToken = data.data[0].access_token;
                     window.localStorage.setItem('access_token', accessToken);
                     access_token = window.localStorage.getItem('access_token');
@@ -62,6 +71,5 @@ $( document ).ready(function() {
 
 
 });
-
 
 

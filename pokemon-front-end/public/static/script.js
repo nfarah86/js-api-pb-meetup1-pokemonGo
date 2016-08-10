@@ -1,8 +1,35 @@
 
-function geoFindMe(){
+    var element = document.createElement("li");
+    element.setAttribute("id", "logout");
+    var createA = document.createElement('a');
+    var t = document.createTextNode("Logout");
 
+    createA.setAttribute("href", "/login");
+    createA.appendChild(t)
 
-  var output = document.getElementById("out");
+    element.appendChild(createA)
+    var gotElement = document.getElementsByTagName("UL")[0];
+
+    gotElement.appendChild(element);  
+
+   $( "#logout" ).click(function() {
+      window.localStorage.removeItem('access_token');
+      access_token = window.localStorage.getItem('access_token');
+      window.location = 'login'
+
+      console.log("access token is: ", access_token)
+
+    });
+  
+
+  function geoFindMe(){
+    access_token = window.localStorage.getItem('access_token');
+
+    if (access_token === null) {
+         window.location = 'login'
+      };
+ 
+    var output = document.getElementById("out");
 
     if (!navigator.geolocation){
       output.innerHTML = "<p>Geolocation is not supported by your browser</p>";
@@ -104,18 +131,10 @@ function geoFindMe(){
             e.layer.feature.properties['oldIconUrl'] = e.layer.feature.properties.icon['iconUrl'];
             e.layer.feature.properties.icon['iconUrl'] = 'http://vignette2.wikia.nocookie.net/pokemon-fano/images/6/6f/Poke_Ball.png/revision/latest?cb=20140520015336';
             myLayer.setGeoJSON(geoJson);
-      }
-    });
-  
+        }
+      });
+    };
+  }
 
 
-
-
-};
-
-
-
-
-
-}
 }

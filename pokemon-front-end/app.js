@@ -24,6 +24,10 @@ app.get('/error', function (req, res) {
   res.render('error', { title: 'uh ohh'});
 });
 
+app.get('/login', function (req, res) {
+  res.render('login', { title: 'Login'});
+});
+
 app.listen(9000, function () {
   console.log('Example app listening on port 9000!');
 });
