@@ -1,4 +1,10 @@
+$(document).ready(function() {
 
+var id= window.localStorage.getItem('id');
+
+  createLogOut();
+  function createLogOut() {
+    
     var element = document.createElement("li");
     element.setAttribute("id", "logout");
     var createA = document.createElement('a');
@@ -9,20 +15,31 @@
 
     element.appendChild(createA)
     var gotElement = document.getElementsByTagName("UL")[0];
-
     gotElement.appendChild(element);  
-
-   $( "#logout" ).click(function() {
-      window.localStorage.removeItem('access_token');
-      access_token = window.localStorage.getItem('access_token');
-      window.location = 'login'
-
-      console.log("access token is: ", access_token)
-
+  };    
+   
+   $("#logout").click(function() {
+      alert("logout")
+        $.ajax({
+          url: "http://localhost:3000/access_tokens/" + id.toString(),
+          type: 'DELETE',
+          contentType: 'application/x-www-form-urlencoded',
+          success: function(data) {
+             window.localStorage.removeItem('access_token');
+             window.localStorage.removeItem('id');
+             window.location = 'login'
+          },
+          error: function(errorThrown) {
+            console.log(errorThrown);
+          }
+      });
     });
-  
+ 
+     $("#pokemonButton").click(function() {
+        geoFindMe()
+      });
 
-  function geoFindMe(){
+    function geoFindMe(){
     access_token = window.localStorage.getItem('access_token');
 
     if (access_token === null) {
@@ -51,8 +68,6 @@
     navigator.geolocation.getCurrentPosition(success, error);
   
     function mapLocation(lat1, long1) {
-
-
         L.mapbox.accessToken = 'pk.eyJ1IjoibmFkaW5lMTIxMiIsImEiOiJjaXI1cmh6b2IwMDh4ZzdubnRqdDFyNXlwIn0.mVYNJqMFyiQqXlKFpXj3Sg';
         var map = L.mapbox.map('map', 'mapbox.streets')
         .setView([lat1, long1], 25);
@@ -61,8 +76,6 @@
         buttonPokemon.innerHTML= "Catch Em!"
         output.innerHTML = "<p></p>";
         access_token = window.localStorage.getItem('access_token');
-
-
 
           $.ajax({
                 url: 'http://localhost:3000/pokemon_jsons',
@@ -79,13 +92,11 @@
                     if (data.data[i].updated_at) {
                         delete data.data[i].updated_at;
                     }
-
                        setData(data)
                   }
                 },
-                 error: function( jqXhr, textStatus, errorThrown ){
+                 error: function(jqXhr, textStatus, errorThrown){
                   console.log("here is the access token ", access_token)
-
                   console.error(jqXhr, textStatus, errorThrown)
                     
                 }
@@ -124,7 +135,7 @@
 
      myLayer.setGeoJSON(geoJson);
 
-    myLayer.on('click', function(e) {
+     myLayer.on('click', function(e) {
        var pokemonCoordinates =  e.layer.feature.geometry.coordinates
         var distance = calcDistance(lat1, pokemonCoordinates[1], long1, pokemonCoordinates[0]);
         if (distance < 100) {
@@ -134,7 +145,6 @@
         }
       });
     };
+   }
   }
-
-
-}
+});

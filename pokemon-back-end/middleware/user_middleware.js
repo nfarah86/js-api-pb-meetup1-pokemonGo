@@ -13,9 +13,6 @@ module.exports = (function() {
 
         controller.params.accessToken = accessToken;
         controller.params.user = user;
-        //console.log(controller.params.accessToken);
-       // console.log(controller.params.user);
-
         callback();
 
       });

@@ -45,7 +45,7 @@ class AccessToken extends Nodal.Model {
           var accessToken = new AccessToken({
             user_id: user.get('id'),
             access_token: this.generateAccessTokenString(user.get('id'), user.get('email'), new Date().valueOf()),
-            token_type: 'bearer',
+            token_type: 'Bearer',
             expires_at: (new Date(new Date().valueOf() + (30 * 24 * 60 * 60 * 1000))),
             ip_address: params.ip_address
           }).save(callback);
@@ -64,7 +64,7 @@ class AccessToken extends Nodal.Model {
       .join('user')
       .where({
         access_token: params.auth.access_token,
-        expires_at__gte: new Date()
+        //expires_at__gte: new Date()
       })
       .end((err, accessTokens) => {
 

@@ -28,6 +28,10 @@ app.get('/login', function (req, res) {
   res.render('login', { title: 'Login'});
 });
 
+app.get('/aboutus', function (req, res) {
+  res.render('aboutus', { title: 'Nadine'});
+});
+
 app.listen(9000, function () {
   console.log('Example app listening on port 9000!');
 });

@@ -1,4 +1,32 @@
-$( document ).ready(function() {
+$(document).ready(function() {
+
+createLogInButton();
+  function createLogInButton() {
+    
+    var element = document.createElement("li");
+    element.setAttribute("id", "login");
+    var createA = document.createElement('a');
+    var t = document.createTextNode("Log In");
+
+    createA.setAttribute("href", "/login");
+    createA.appendChild(t)
+
+    element.appendChild(createA)
+    var gotElement = document.getElementsByTagName("UL")[0];
+    gotElement.appendChild(element);  
+  };    
+
+    $("#catchPokemon").click(function() {
+        alert('wrokng')
+        console.log(window.localStorage.getItem('access_token'))
+      if (window.localStorage.getItem('access_token')) {
+        window.location = '/map'
+      } else {
+        console.log("inside if")
+
+        window.location = '/index'
+      }
+    });
 
     var form = document.querySelector("form");
 
@@ -27,7 +55,7 @@ $( document ).ready(function() {
             });
     } else {
         window.location = 'error';
-    }
+      }
     });
 
     function setAccessToken(id) {
@@ -36,32 +64,16 @@ $( document ).ready(function() {
                 url: 'http://localhost:3000/access_tokens',
                 type: 'post',
                 contentType: 'application/x-www-form-urlencoded',
-                data:  {"user_id":id, "access_token":"trial133", "token_type":"Bearer"},
+                data:  {"user_id":id, "access_token":id, "token_type":"Bearer"},
 
                 success: function( data, textStatus, jQxhr ){
-                    var accessToken = data.data[0].access_token;
-                    window.localStorage.setItem('access_token', accessToken);
-                    access_token = window.localStorage.getItem('access_token');
-                    console.log("access token is: ", access_token)
+                    window.localStorage.setItem('access_token', id);
                 },
                 error: function( jqXhr, textStatus, errorThrown ){
                   console.error(jqXhr, textStatus, errorThrown)
                     window.location = 'error';
                 }
             });
-
     }
-
-
-
-
-
-
-
-
-
-
 });
-
-
 

@@ -9,11 +9,11 @@
   },
   "dependencies": {
     "bcryptjs": "^2.3.0",
-    "nodal": "0.12.2"
+    "nodal": "0.12.7"
   },
   "devDependencies": {
     "chai": "~3.5.0",
-    "mocha": "~2.4.5"
+    "mocha": "~3.0.2"
   },
   "scripts": {
     "test": "mocha ./test/runner.js",
