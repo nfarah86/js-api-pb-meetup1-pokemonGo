@@ -17,7 +17,6 @@ createLogInButton();
   };    
 
     $("#catchPokemon").click(function() {
-        alert('wrokng')
         console.log(window.localStorage.getItem('access_token'))
       if (window.localStorage.getItem('access_token')) {
         window.location = '/map'

@@ -1,6 +1,6 @@
 $(document).ready(function() {
-
-var id= window.localStorage.getItem('id');
+    var id= window.localStorage.getItem('id');
+    var access_token = window.localStorage.getItem('access_token')
 
   createLogOut();
   function createLogOut() {
@@ -19,7 +19,6 @@ var id= window.localStorage.getItem('id');
   };    
    
    $("#logout").click(function() {
-      alert("logout")
         $.ajax({
           url: "http://localhost:3000/access_tokens/" + id.toString(),
           type: 'DELETE',
@@ -40,7 +39,6 @@ var id= window.localStorage.getItem('id');
       });
 
     function geoFindMe(){
-    access_token = window.localStorage.getItem('access_token');
 
     if (access_token === null) {
          window.location = 'login'
@@ -67,6 +65,25 @@ var id= window.localStorage.getItem('id');
     output.innerHTML = "<p>Locating…</p>";
     navigator.geolocation.getCurrentPosition(success, error);
   
+    function updateSlack(urlData){
+      data = JSON.stringify(urlData)
+      var json = {"channel": "#general", "username": "Pokemon-Update", "text": "<"+urlData+"|Click here> to see the Pokemon that's captured!", "icon_emoji": ":pokeball:"}
+      var sdata ='payload=' + JSON.stringify(json);
+      $.ajax({
+        url: 'https://hooks.slack.com/services/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',
+        type: 'post',
+        contentType: 'application/x-www-form-urlencoded',
+        data:  sdata,
+             success: function(data) {
+             console.log('success, posted to slack')
+          },
+          error: function(errorThrown) {
+           console.log(errorThrown);
+          }
+      });
+    }  
+
+
     function mapLocation(lat1, long1) {
         L.mapbox.accessToken = 'pk.eyJ1IjoibmFkaW5lMTIxMiIsImEiOiJjaXI1cmh6b2IwMDh4ZzdubnRqdDFyNXlwIn0.mVYNJqMFyiQqXlKFpXj3Sg';
         var map = L.mapbox.map('map', 'mapbox.streets')
@@ -81,7 +98,7 @@ var id= window.localStorage.getItem('id');
                 url: 'http://localhost:3000/pokemon_jsons',
                 type: 'get',
                 headers: {
-                      'Authorization':'Bearer ' + access_token,
+                      'Authorization':'Bearer 74' ,
                   },
                 contentType: 'application/x-www-form-urlencoded',
                 success: function( data, textStatus, jQxhr ){
@@ -142,9 +159,12 @@ var id= window.localStorage.getItem('id');
             e.layer.feature.properties['oldIconUrl'] = e.layer.feature.properties.icon['iconUrl'];
             e.layer.feature.properties.icon['iconUrl'] = 'http://vignette2.wikia.nocookie.net/pokemon-fano/images/6/6f/Poke_Ball.png/revision/latest?cb=20140520015336';
             myLayer.setGeoJSON(geoJson);
+            updateSlack(e.layer.feature.properties['oldIconUrl'] )
         }
       });
     };
    }
+  
+
   }
 });
