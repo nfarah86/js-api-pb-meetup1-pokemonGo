@@ -2,9 +2,17 @@
 
 const Nodal = require('nodal');
 const PokemonJson = Nodal.require('app/models/pokemon_json.js');
+const UserLoginMiddleware = Nodal.require('middleware/user_login_middleware.js');
 
 class PokemonJsonsController extends Nodal.Controller {
 
+ before() {
+
+      // Loads our user into memory
+      this.middleware.use(UserLoginMiddleware);
+
+    }
+    
   index() {
 
     PokemonJson.query()

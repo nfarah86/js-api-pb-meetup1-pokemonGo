@@ -1,8 +1,50 @@
+$(document).ready(function() {
+    var id= window.localStorage.getItem('id');
+    var access_token = window.localStorage.getItem('access_token')
 
-function geoFindMe(){
+  createLogOut();
+  function createLogOut() {
+    
+    var element = document.createElement("li");
+    element.setAttribute("id", "logout");
+    var createA = document.createElement('a');
+    var t = document.createTextNode("Logout");
 
+    createA.setAttribute("href", "/login");
+    createA.appendChild(t)
 
-  var output = document.getElementById("out");
+    element.appendChild(createA)
+    var gotElement = document.getElementsByTagName("UL")[0];
+    gotElement.appendChild(element);  
+  };    
+   
+   $("#logout").click(function() {
+        $.ajax({
+          url: "http://localhost:3000/access_tokens/" + id.toString(),
+          type: 'DELETE',
+          contentType: 'application/x-www-form-urlencoded',
+          success: function(data) {
+             window.localStorage.removeItem('access_token');
+             window.localStorage.removeItem('id');
+             window.location = 'login'
+          },
+          error: function(errorThrown) {
+            console.log(errorThrown);
+          }
+      });
+    });
+ 
+     $("#pokemonButton").click(function() {
+        geoFindMe()
+      });
+
+    function geoFindMe(){
+
+    if (access_token === null) {
+         window.location = 'login'
+      };
+ 
+    var output = document.getElementById("out");
 
     if (!navigator.geolocation){
       output.innerHTML = "<p>Geolocation is not supported by your browser</p>";
@@ -23,25 +65,60 @@ function geoFindMe(){
     output.innerHTML = "<p>Locating…</p>";
     navigator.geolocation.getCurrentPosition(success, error);
   
+    function updateSlack(urlData){
+      data = JSON.stringify(urlData)
+      var json = {"channel": "#general", "username": "Pokemon-Update", "text": "<"+urlData+"|Click here> to see the Pokemon that's captured!", "icon_emoji": ":pokeball:"}
+      var sdata ='payload=' + JSON.stringify(json);
+      $.ajax({
+        url: 'https://hooks.slack.com/services/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',
+        type: 'post',
+        contentType: 'application/x-www-form-urlencoded',
+        data:  sdata,
+             success: function(data) {
+             console.log('success, posted to slack')
+          },
+          error: function(errorThrown) {
+           console.log(errorThrown);
+          }
+      });
+    }  
+
+
     function mapLocation(lat1, long1) {
-
-
         L.mapbox.accessToken = 'pk.eyJ1IjoibmFkaW5lMTIxMiIsImEiOiJjaXI1cmh6b2IwMDh4ZzdubnRqdDFyNXlwIn0.mVYNJqMFyiQqXlKFpXj3Sg';
         var map = L.mapbox.map('map', 'mapbox.streets')
         .setView([lat1, long1], 25);
 
         var buttonPokemon = document.getElementById("pokemonButton");
         buttonPokemon.innerHTML= "Catch Em!"
+        output.innerHTML = "<p></p>";
+        access_token = window.localStorage.getItem('access_token');
 
-       $.get("http://localhost:3000/pokemon_jsons", function(data, status){
-        for (var i = 0; i < data.data.length; i++) {
-              if (data.data[i].created_at) {
-                  delete data.data[i].created_at;
-              } 
-              if (data.data[i].updated_at) {
-                  delete data.data[i].updated_at;
-              }
-        }
+          $.ajax({
+                url: 'http://localhost:3000/pokemon_jsons',
+                type: 'get',
+                headers: {
+                      'Authorization':'Bearer 74' ,
+                  },
+                contentType: 'application/x-www-form-urlencoded',
+                success: function( data, textStatus, jQxhr ){
+                  for (var i = 0; i < data.data.length; i++) {
+                    if (data.data[i].created_at) {
+                        delete data.data[i].created_at;
+                    } 
+                    if (data.data[i].updated_at) {
+                        delete data.data[i].updated_at;
+                    }
+                       setData(data)
+                  }
+                },
+                 error: function(jqXhr, textStatus, errorThrown){
+                  console.error(jqXhr, textStatus, errorThrown)
+                    
+                }
+           });
+
+      function setData(data) {
        var geoJson = data.data;
 
        var myLayer = L.mapbox.featureLayer().addTo(map);
@@ -58,7 +135,6 @@ function geoFindMe(){
                   Math.sin(Δλ/2) * Math.sin(Δλ/2);
           var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
           var d = R * c;
-          console.log(d)
           return d;
       }
 
@@ -74,15 +150,19 @@ function geoFindMe(){
 
      myLayer.setGeoJSON(geoJson);
 
-    myLayer.on('click', function(e) {
+     myLayer.on('click', function(e) {
        var pokemonCoordinates =  e.layer.feature.geometry.coordinates
         var distance = calcDistance(lat1, pokemonCoordinates[1], long1, pokemonCoordinates[0]);
         if (distance < 100) {
             e.layer.feature.properties['oldIconUrl'] = e.layer.feature.properties.icon['iconUrl'];
             e.layer.feature.properties.icon['iconUrl'] = 'http://vignette2.wikia.nocookie.net/pokemon-fano/images/6/6f/Poke_Ball.png/revision/latest?cb=20140520015336';
             myLayer.setGeoJSON(geoJson);
-      }
-    });
-  });
-}
-}
+            updateSlack(e.layer.feature.properties['oldIconUrl'] )
+        }
+      });
+    };
+   }
+  
+
+  }
+});

@@ -1,0 +1,22 @@
+extends layout
+
+block content
+  h1 Please Log In
+  .container
+    form#loginForm
+      .form-group.row
+        label.col-sm-2.col-form-label(for='username') Username
+        .col-sm-10
+          input#inputEmail3.form-control(type='username', placeholder='Username', name='username')
+      .form-group.row
+        label.col-sm-2.col-form-label(for='password') Password
+        .col-sm-10
+          input#inputPassword3.form-control(type='password', placeholder='Password', name='password')
+      .form-group.row
+        .offset-sm-2.col-sm-10
+          button.btn.btn-primary(type='submit') login
+
+      script(src='https://code.jquery.com/jquery-1.9.1.min.js')
+      script(type='text/javascript', src='/static/login.js')
+
+
